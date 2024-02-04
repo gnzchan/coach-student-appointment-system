@@ -93,6 +93,8 @@ const SwitchUserDropdown = ({
     }
   };
 
+  if (!user) return;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
