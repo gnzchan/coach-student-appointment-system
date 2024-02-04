@@ -23,8 +23,10 @@ const Navbar = () => {
         <Link key={route.href} href={route.href} onClick={onClose}>
           <div
             className={cn(
-              "text-lg rounded-md transition duration-200 after:bg-neutral-900 w-min mx-auto",
-              pathname === route.href ? "text-neutral-900" : "text-neutral-500"
+              "nav-link  text-lg rounded-md transition duration-200 after:bg-neutral-900 w-min mx-auto",
+              pathname === route.href
+                ? "text-neutral-900 lg:after:w-full"
+                : "text-neutral-500"
             )}
           >
             {route.label}
