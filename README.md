@@ -10,12 +10,12 @@
   - Students can cancel appointments or view details about booked slots
   - Users can view each others details, including name and contact, when a slot is booked
 - Appointment History
-  - Users can review details of past appointments.
-  - Coaches can add scores (1-5) and notes to historical appointments.
-  - Students can revisit details of past appointments.
+  - Users can review details of past appointments
+  - Coaches can add scores (1-5) and notes to historical appointments
+  - Students can revisit details of past appointments
 - Cancellation Mechanism:
-  - Coaches and students can cancel appointments, freeing up time slots.
-  - Cancellations trigger updates to both coach and student schedules.
+  - Coaches and students can cancel appointments, freeing up time slots
+  - Cancellations trigger updates to both coach and student schedules
 
 ## Demo
 
