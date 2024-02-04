@@ -1,9 +1,13 @@
 import { GuideAccordion } from "@/components/custom/home/guide-accordion";
-import { getActiveUser } from "@/lib/firebase-functions";
+import {
+  deletePastUnbookedSlots,
+  getActiveUser,
+} from "@/lib/firebase-functions";
 
 export const revalidate = 0;
 
 export default async function Home() {
+  await deletePastUnbookedSlots();
   const user = await getActiveUser();
 
   const messageContent: { userType: UserType; message: string }[] = [

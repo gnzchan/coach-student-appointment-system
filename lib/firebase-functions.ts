@@ -197,3 +197,20 @@ export const isCoachSlotAvailable = async (slotId: string) => {
 export const updateCoachSlot = async (slot: Slot) => {
   await setDoc(doc(database, "slots", slot.id), slot);
 };
+
+// Function to remove past slots that were unbooked. This removes unused data
+export const deletePastUnbookedSlots = async () => {
+  const q = query(collection(database, "slots"), where("studentId", "==", ""));
+  const querySnapshot = await getDocs(q);
+
+  const removeSlotsPromise: Promise<void>[] = [];
+
+  querySnapshot.docs.forEach((d) => {
+    if (new Date((d.data() as Slot).endDateTime) < new Date()) {
+      const promise = deleteDoc(doc(database, "slots", (d.data() as Slot).id));
+      removeSlotsPromise.push(promise);
+    }
+  });
+
+  await Promise.all(removeSlotsPromise);
+};

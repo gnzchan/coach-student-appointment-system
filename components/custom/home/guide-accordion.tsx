@@ -24,9 +24,9 @@ const GuideAccordion = () => {
           <AccordionContent>
             The Upcoming tab keeps you informed about your upcoming
             appointments. Coaches, cancel appointments to unblock the schedule,
-            and view your students' details. Students, cancel your appointments
-            or see details about your booked slots. Manage your commitments
-            hassle-free.
+            and view your students&apos; details. Students, cancel your
+            appointments or see details about your booked slots. Manage your
+            commitments hassle-free.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="history">
