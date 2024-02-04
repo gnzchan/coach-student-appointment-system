@@ -39,6 +39,16 @@ npm run start
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+To check what was accomplished within 3 hours, switch to branch:
+
+```bash
+threeHourCheckpoint
+```
+
+Note that there were caching issues not resolved within the branch, but to summarize, only the Calendar Page was implemented during the time duration.
+
+Approximately 7 hours took to complete the app (excluding downtime eg. break, eye rests)
+
 ## Tech Stack
 
 Made using Next.js
