@@ -25,7 +25,7 @@ export default function RootLayout({
         <ToasterProvider />
         <Header />
         <main className="flex-1 flex sm:justify-center">
-          <div className="max-w-[1200px] min-w-[400px] w-full px-10">
+          <div className="max-w-[1200px] min-w-[400px] w-full px-10 py-6">
             {children}
           </div>
         </main>
