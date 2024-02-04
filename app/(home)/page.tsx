@@ -33,7 +33,7 @@ export default async function Home() {
           {messageContent.find((msg) => msg.userType === user?.type)?.message}
         </p>
       </div>
-      <div>
+      <div className="mb-16">
         <GuideAccordion />
       </div>
     </div>
