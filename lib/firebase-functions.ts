@@ -3,6 +3,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  orderBy,
   query,
   setDoc,
   where,
@@ -81,4 +82,22 @@ export const addCoachSlot = async (slot: Slot) => {
 
 export const deleteCoachSlot = async (slotId: string) => {
   await deleteDoc(doc(database, "slots", slotId));
+};
+
+// STUDENT FUNCTIONS
+
+// Gets all slots across from all coaches that is not booked yet
+export const getAvailableCoachSlots = async () => {
+  const q = query(
+    collection(database, "slots"),
+    where("studentId", "==", ""),
+    orderBy("startDateTime")
+  );
+
+  const querySnapshot = await getDocs(q);
+  const slots: Slot[] = [];
+
+  querySnapshot.docs.forEach((doc) => slots.push(doc.data() as Slot));
+
+  return slots;
 };
