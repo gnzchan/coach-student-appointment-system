@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Calendar } from "@/components/ui/calendar";
+import { TimeSlotsContainer } from "@/components/custom/calendar/time-slots-container";
+import { useUser } from "@/hooks/useUser";
+import { useCoachTimeSlots } from "@/hooks/useCoachTimeSlots";
 import { getTimeSlots } from "@/lib/utils";
-import { format } from "date-fns";
 
 // Initial value when loading calendar. Purpose is to force user to choose a date (hacky and not the best approach)
 const UNREACHABLE_DATE = "1999-1-1";
 
-const CoachAvailabilityForm = () => {
+const CoachAvailabilityForm = ({ coachSlots }: { coachSlots: Slot[] }) => {
+  const { user } = useUser();
   const [date, setDate] = useState<{
     calendarDate: Date;
     dateTime: Date | null;
@@ -18,6 +21,17 @@ const CoachAvailabilityForm = () => {
     dateTime: null,
   });
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
+  const { coachTimeSlots, setCoachTimeSlots, onToggleSlot } =
+    useCoachTimeSlots(user);
+
+  useEffect(() => {
+    console.log(coachSlots);
+    const initialCoachTimeSlots = coachSlots.map((slot) => ({
+      startDateTime: new Date(slot.startDateTime),
+      endDateTime: new Date(slot.endDateTime),
+    }));
+    setCoachTimeSlots(initialCoachTimeSlots);
+  }, [coachSlots]);
 
   const handleOnDateClick = (value: Date) => {
     setDate((prev) => ({ ...prev, calendarDate: value }));
@@ -25,22 +39,20 @@ const CoachAvailabilityForm = () => {
   };
 
   return (
-    <div>
-      <Calendar
-        selected={date.calendarDate}
-        fromDate={new Date()}
-        onDayClick={handleOnDateClick}
-      />
-      <div className="grid grid-cols-2 md:grid-cols-3 w-full gap-5">
-        {timeSlots.map((ts) => {
-          return (
-            <button>
-              {format(ts.startDateTime, "hh:mm aaaaa'm'")}
-              <br />
-              {format(ts.endDateTime, "hh:mm aaaaa'm'")}
-            </button>
-          );
-        })}
+    <div className="lg:grid lg:grid-cols-2 gap:12 lg:gap-4 flex flex-col px-10 w-full">
+      <div className="flex justify-center items-center">
+        <Calendar
+          selected={date.calendarDate}
+          fromDate={new Date()}
+          onDayClick={handleOnDateClick}
+        />
+      </div>
+      <div className="flex justify-center items-center">
+        <TimeSlotsContainer
+          timeSlots={timeSlots}
+          coachTimeSlots={coachTimeSlots}
+          handleToggleSlot={onToggleSlot}
+        />
       </div>
     </div>
   );
