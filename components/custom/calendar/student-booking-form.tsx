@@ -27,7 +27,7 @@ const StudentBookingForm = ({
 
   return (
     <div className="lg:grid lg:grid-cols-2 gap:12 lg:gap-4 flex flex-col px-10 w-full">
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center">
         <Calendar
           selected={date.calendarDate}
           fromDate={new Date()}
