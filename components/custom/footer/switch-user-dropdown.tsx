@@ -84,6 +84,7 @@ const SwitchUserDropdown = ({
       await switchActiveUser(newUser);
       setUser(newUser);
       router.push("/");
+      router.refresh();
     }
   };
 
