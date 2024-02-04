@@ -42,3 +42,4 @@ export const switchActiveUser = async (newUser: User) => {
   await Promise.all(removeUsersPromise);
   await setDoc(doc(database, "activeUser", newUser.id.toString()), newUser);
 };
+
