@@ -13,7 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { User, useUser } from "@/hooks/useUser";
+import { useUser } from "@/hooks/useUser";
+import { useEffect } from "react";
 
 const users: User[] = [
   {
@@ -57,8 +58,12 @@ const users: User[] = [
 const coaches: User[] = users.filter((u) => u.type === "coach");
 const students: User[] = users.filter((u) => u.type === "student");
 
-const SwitchUserDropdown = () => {
+const SwitchUserDropdown = ({ activeUser }: { activeUser: User }) => {
   const { user, setUser } = useUser();
+
+  useEffect(() => {
+    setUser(activeUser);
+  }, [activeUser]);
 
   const handleSwitchUser = async (id: string) => {
     const newUser = users.find((u) => u.id === id);
