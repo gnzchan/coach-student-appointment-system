@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import {
   Table,
@@ -48,6 +49,7 @@ const UpcomingAppointments = ({
     }
     setAppointments((prev) => prev.filter((s) => s.id !== slot.id));
     router.refresh();
+    toast.success("Cancelled");
   };
 
   const getUserName = (userId: string) => {

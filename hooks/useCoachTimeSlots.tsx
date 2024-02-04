@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { nanoid } from "nanoid";
 
 import {
@@ -10,7 +11,7 @@ import {
 const useCoachTimeSlots = (user: User | undefined) => {
   const [coachTimeSlots, setCoachTimeSlots] = useState<TimeSlot[]>([]);
 
-  const toggleAddSlot = async (coachSlot: Slot, slot: TimeSlot) => {
+  const toggleDeleteSlot = async (coachSlot: Slot, slot: TimeSlot) => {
     setCoachTimeSlots((prev) =>
       prev.filter(
         (ct) =>
@@ -20,9 +21,10 @@ const useCoachTimeSlots = (user: User | undefined) => {
       )
     );
     await deleteCoachSlot(coachSlot.id);
+    toast.success("Removed");
   };
 
-  const toggleDeleteSlot = async (slot: TimeSlot) => {
+  const toggleAddSlot = async (slot: TimeSlot) => {
     if (!user) return;
 
     setCoachTimeSlots((prev) => [
@@ -39,6 +41,7 @@ const useCoachTimeSlots = (user: User | undefined) => {
       score: 0,
     };
     await addCoachSlot(data);
+    toast.success("Added");
   };
 
   const onToggleSlot = async (slot: TimeSlot) => {
@@ -47,9 +50,9 @@ const useCoachTimeSlots = (user: User | undefined) => {
     const coachSlot = await getCoachSlot(user.id, slot);
 
     if (coachSlot) {
-      await toggleAddSlot(coachSlot, slot);
+      await toggleDeleteSlot(coachSlot, slot);
     } else {
-      await toggleDeleteSlot(slot);
+      await toggleAddSlot(slot);
     }
   };
 

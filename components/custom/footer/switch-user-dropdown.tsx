@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { GiWhistle } from "react-icons/gi";
 import { PiStudent } from "react-icons/pi";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import {
   DropdownMenu,
@@ -88,6 +89,7 @@ const SwitchUserDropdown = ({
       setUser(newUser);
       router.push("/");
       router.refresh();
+      toast.success("User switched");
     }
   };
 

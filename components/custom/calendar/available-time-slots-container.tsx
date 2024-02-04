@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import {
   Table,
@@ -55,6 +56,9 @@ const AvailableTimeSlotsContainer = ({
       setAvailableSlotsForDay((prev) => prev.filter((s) => s.id !== slot.id));
       const data = { ...slot, studentId: user.id };
       await updateCoachSlot(data);
+      toast.success("Booked");
+    } else {
+      toast.error("Failed to book. Reload page");
     }
     router.refresh();
   };
