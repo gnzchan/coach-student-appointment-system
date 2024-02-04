@@ -24,7 +24,7 @@ const AvailableTimeSlotsContainer = ({
   };
   availableCoachSlots: Slot[];
 }) => {
-  const { user } = useUser();
+  const { user, users } = useUser();
   const [availableSlotsForDay, setAvailableSlotsForDay] = useState<Slot[]>([]);
 
   useEffect(() => {
@@ -55,6 +55,12 @@ const AvailableTimeSlotsContainer = ({
     }
   };
 
+  const getUserName = (userId: string) => {
+    const user = users.find((u) => u.id === userId);
+
+    return user?.name;
+  };
+
   if (availableSlotsForDay.length === 0) {
     return <span className="text-center">No available slots</span>;
   }
@@ -72,7 +78,9 @@ const AvailableTimeSlotsContainer = ({
         <TableBody>
           {availableSlotsForDay.map((slot) => (
             <TableRow key={slot.id}>
-              <TableCell className="font-medium">{slot.coachId}</TableCell>
+              <TableCell className="font-medium">
+                {getUserName(slot.coachId)}
+              </TableCell>
               <TableCell>{slot.startDateTime}</TableCell>
               <TableCell>{slot.endDateTime}</TableCell>
               <TableCell className="text-right">
