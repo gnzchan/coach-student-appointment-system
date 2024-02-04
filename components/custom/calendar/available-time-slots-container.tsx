@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   Table,
@@ -24,6 +25,7 @@ const AvailableTimeSlotsContainer = ({
   };
   availableCoachSlots: Slot[];
 }) => {
+  const router = useRouter();
   const { user, users } = useUser();
   const [availableSlotsForDay, setAvailableSlotsForDay] = useState<Slot[]>([]);
 
@@ -53,6 +55,7 @@ const AvailableTimeSlotsContainer = ({
       const data = { ...slot, studentId: user.id };
       await updateCoachSlot(data);
     }
+    router.refresh();
   };
 
   const getUserName = (userId: string) => {

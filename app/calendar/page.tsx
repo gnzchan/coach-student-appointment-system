@@ -6,6 +6,8 @@ import {
   getCoachSlots,
 } from "@/lib/firebase-functions";
 
+export const revalidate = 0;
+
 export default async function Calendar() {
   const user = await getActiveUser();
   const coachSlots = await getCoachSlots(user.id);
