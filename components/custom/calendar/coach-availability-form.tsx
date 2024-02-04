@@ -21,8 +21,10 @@ const CoachAvailabilityForm = ({ coachSlots }: { coachSlots: Slot[] }) => {
     dateTime: null,
   });
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
-  const { coachTimeSlots, setCoachTimeSlots, onToggleSlot } =
-    useCoachTimeSlots(user);
+  const { coachTimeSlots, setCoachTimeSlots, onToggleSlot } = useCoachTimeSlots(
+    user,
+    coachSlots
+  );
 
   useEffect(() => {
     const initialCoachTimeSlots = coachSlots.map((slot) => ({

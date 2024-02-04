@@ -11,7 +11,7 @@ export default async function History() {
   const user = await getActiveUser();
 
   const pastAppointments =
-    user.type === "coach"
+    user?.type === "coach"
       ? await getCoachPastAppointments(user.id)
       : await getStudentPastAppointments(user.id);
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Router, { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { nanoid } from "nanoid";
 
@@ -8,7 +9,8 @@ import {
   getCoachSlot,
 } from "@/lib/firebase-functions";
 
-const useCoachTimeSlots = (user: User | undefined) => {
+const useCoachTimeSlots = (user: User | undefined, coachSlots: Slot[]) => {
+  const router = useRouter();
   const [coachTimeSlots, setCoachTimeSlots] = useState<TimeSlot[]>([]);
 
   const toggleDeleteSlot = async (coachSlot: Slot, slot: TimeSlot) => {
@@ -47,13 +49,26 @@ const useCoachTimeSlots = (user: User | undefined) => {
   const onToggleSlot = async (slot: TimeSlot) => {
     if (!user) return;
 
-    const coachSlot = await getCoachSlot(user.id, slot);
+    const coachSlot = getCoachSlot(user.id, slot);
 
     if (coachSlot) {
       await toggleDeleteSlot(coachSlot, slot);
     } else {
       await toggleAddSlot(slot);
     }
+    router.refresh();
+  };
+
+  const getCoachSlot = (coachId: string, slot: TimeSlot) => {
+    const coachSlot = coachSlots.find((s) => {
+      return (
+        s.coachId === coachId &&
+        new Date(s.startDateTime).getTime() === slot.startDateTime.getTime() &&
+        new Date(s.endDateTime).getTime() === slot.endDateTime.getTime()
+      );
+    });
+
+    return coachSlot;
   };
 
   return { coachTimeSlots, setCoachTimeSlots, onToggleSlot };

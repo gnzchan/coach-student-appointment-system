@@ -10,12 +10,15 @@ export const revalidate = 0;
 
 export default async function Calendar() {
   const user = await getActiveUser();
-  const coachSlots = await getCoachSlots(user.id);
-  const availableCoachSlots = await getAvailableCoachSlots();
+
+  // Ternary to avoid making server call if data won't be used
+  const coachSlots = user?.type === "coach" ? await getCoachSlots(user.id) : [];
+  const availableCoachSlots =
+    user?.type === "student" ? await getAvailableCoachSlots() : [];
 
   return (
     <>
-      {user.type === "coach" ? (
+      {user?.type === "coach" ? (
         <CoachAvailabilityForm coachSlots={coachSlots} />
       ) : (
         <StudentBookingForm availableCoachSlots={availableCoachSlots} />
