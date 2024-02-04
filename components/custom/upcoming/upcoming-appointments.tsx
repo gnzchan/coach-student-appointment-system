@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { format } from "date-fns";
 
 import {
   Table,
@@ -74,8 +75,7 @@ const UpcomingAppointments = ({
         <TableRow>
           <TableHead>Coach</TableHead>
           <TableHead>Student</TableHead>
-          <TableHead>Start</TableHead>
-          <TableHead>End</TableHead>
+          <TableHead>Schedule</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -91,8 +91,11 @@ const UpcomingAppointments = ({
                 slot.studentId
               )}`}
             </TableCell>
-            <TableCell>{slot.startDateTime}</TableCell>
-            <TableCell>{slot.endDateTime}</TableCell>
+            <TableCell>
+              <span>{`${format(slot.startDateTime, "MMM d, yyyy, ha")}`}</span>
+              <br />
+              <span>{`${format(slot.endDateTime, "MMM d, yyyy, ha")}`}</span>
+            </TableCell>
             <TableCell className="text-right">
               <button
                 onClick={() => {

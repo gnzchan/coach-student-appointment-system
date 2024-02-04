@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { GiWhistle } from "react-icons/gi";
 import { PiStudent } from "react-icons/pi";
+import { format } from "date-fns";
 
 import { AppointmentReviewForm } from "@/components/custom/history/appointment-review-form";
 import { NoData } from "@/components/custom/no-data";
@@ -15,6 +16,63 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUser } from "@/hooks/useUser";
+
+// const mockAppointments = [
+//   {
+//     coachId: "iD1YUo3D2Z",
+//     endDateTime: "2/2/2024, 6:00:00 PM",
+//     id: "bvE5fuFrIMfAk_GVAYGGR",
+//     notes: "",
+//     score: undefined,
+//     startDateTime: "2/2/2024, 4:00:00 PM",
+//     studentId: "4e7wH9jX2L",
+//   },
+//   {
+//     coachId: "iD1YUo3D2Z",
+//     endDateTime: "2/2/2024, 8:00:00 PM",
+//     id: "aaE5fuFrIMfAk_GVAYGGR",
+//     notes: "",
+//     score: undefined,
+//     startDateTime: "2/2/2024, 6:00:00 PM",
+//     studentId: "4e7wH9jX2L",
+//   },
+//   {
+//     coachId: "iD1YUo3D2Z",
+//     endDateTime: "2/2/2024, 8:00:00 PM",
+//     id: "ccE5fuFrIMfAk_GVAYGGR",
+//     notes: "",
+//     score: undefined,
+//     startDateTime: "2/2/2024, 10:00:00 PM",
+//     studentId: "4e7wH9jX2L",
+//   },
+//   {
+//     coachId: "yjzO2w4Q8E",
+//     endDateTime: "2/2/2024, 6:00:00 PM",
+//     id: "ddE5fuFrIMfAk_GVAYGGR",
+//     notes: "",
+//     score: undefined,
+//     startDateTime: "2/2/2024, 4:00:00 PM",
+//     studentId: "Lq5gI46eUd",
+//   },
+//   {
+//     coachId: "NvEz6qRPg9",
+//     endDateTime: "2/2/2024, 8:00:00 PM",
+//     id: "eeE5fuFrIMfAk_GVAYGGR",
+//     notes: "",
+//     score: undefined,
+//     startDateTime: "2/2/2024, 6:00:00 PM",
+//     studentId: "Lq5gI46eUd",
+//   },
+//   {
+//     coachId: "NvEz6qRPg9",
+//     endDateTime: "2/2/2024, 10:00:00 PM",
+//     id: "ffE5fuFrIMfAk_GVAYGGR",
+//     notes: "",
+//     score: undefined,
+//     startDateTime: "2/2/2024, 8:00:00 PM",
+//     studentId: "Lq5gI46eUd",
+//   },
+// ];
 
 const PastAppointments = ({
   pastAppointments,
@@ -60,8 +118,7 @@ const PastAppointments = ({
               Student
             </span>
           </TableHead>
-          <TableHead>Start</TableHead>
-          <TableHead>End</TableHead>
+          <TableHead>Schedule</TableHead>
           {user?.type === "coach" && (
             <>
               <TableHead>Score</TableHead>
@@ -83,12 +140,15 @@ const PastAppointments = ({
                 slot.studentId
               )}`}
             </TableCell>
-            <TableCell>{slot.startDateTime}</TableCell>
-            <TableCell>{slot.endDateTime}</TableCell>
+            <TableCell>
+              <span>{`${format(slot.startDateTime, "MMM d, yyyy, ha")}`}</span>
+              <br />
+              <span>{`${format(slot.endDateTime, "MMM d, yyyy, ha")}`}</span>
+            </TableCell>
             {user?.type === "coach" && (
               <>
                 <TableCell>{slot.score}</TableCell>
-                <TableCell className="truncate max-w-[200px] text-wrap">
+                <TableCell className="truncate w-[200px] text-wrap">
                   {slot.notes}
                 </TableCell>
                 <TableCell className="text-right">
