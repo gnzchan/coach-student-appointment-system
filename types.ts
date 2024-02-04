@@ -16,3 +16,8 @@ type Slot = {
   score: number | undefined;
   notes: string;
 };
+
+type TimeSlot = {
+  startDateTime: Date;
+  endDateTime: Date;
+};
