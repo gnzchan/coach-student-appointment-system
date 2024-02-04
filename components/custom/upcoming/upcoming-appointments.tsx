@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { NoData } from "@/components/custom/no-data";
 import { useUser } from "@/hooks/useUser";
 import { deleteCoachSlot, updateCoachSlot } from "@/lib/firebase-functions";
 
@@ -62,7 +63,7 @@ const UpcomingAppointments = ({
   };
 
   if (appointments.length === 0) {
-    return <span>No upcoming appointments</span>;
+    return <NoData msg="No upcoming appointments" />;
   }
 
   return (

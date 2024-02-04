@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { NoData } from "@/components/custom/no-data";
 import { useUser } from "@/hooks/useUser";
 import {
   isCoachSlotAvailable,
@@ -65,7 +66,7 @@ const AvailableTimeSlotsContainer = ({
   };
 
   if (availableSlotsForDay.length === 0) {
-    return <span className="text-center">No available slots</span>;
+    return <NoData msg="No available slot" />;
   }
 
   return (

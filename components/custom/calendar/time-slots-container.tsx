@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 
+import { NoData } from "@/components/custom/no-data";
 import { cn } from "@/lib/utils";
 
 interface TimeSlotProps {
@@ -14,7 +15,7 @@ const TimeSlotsContainer = ({
   handleToggleSlot,
 }: TimeSlotProps) => {
   if (timeSlots.length === 0) {
-    return <span className="text-center">Select Date</span>;
+    return <NoData msg="Select date" />;
   }
 
   return (
