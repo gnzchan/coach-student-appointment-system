@@ -77,6 +77,25 @@ export const getCoachSlots = async (coachId: string) => {
   return slots;
 };
 
+export const getCoachUpcomingAppointments = async (coachId: string) => {
+  const q = query(
+    collection(database, "slots"),
+    where("coachId", "==", coachId),
+    where("studentId", "!=", "")
+  );
+
+  const querySnapshot = await getDocs(q);
+  const slots: Slot[] = [];
+
+  querySnapshot.docs.forEach((doc) => slots.push(doc.data() as Slot));
+
+  const upcomingAppointments = slots.filter(
+    (x) => new Date(x.startDateTime) >= new Date()
+  );
+
+  return upcomingAppointments;
+};
+
 export const addCoachSlot = async (slot: Slot) => {
   await setDoc(doc(database, "slots", slot.id.toString()), slot);
 };
@@ -101,6 +120,24 @@ export const getAvailableCoachSlots = async () => {
   querySnapshot.docs.forEach((doc) => slots.push(doc.data() as Slot));
 
   return slots;
+};
+
+export const getStudentUpcomingAppointments = async (studentId: string) => {
+  const q = query(
+    collection(database, "slots"),
+    where("studentId", "==", studentId)
+  );
+
+  const querySnapshot = await getDocs(q);
+  const slots: Slot[] = [];
+
+  querySnapshot.docs.forEach((doc) => slots.push(doc.data() as Slot));
+
+  const upcomingAppointments = slots.filter(
+    (x) => new Date(x.startDateTime) >= new Date()
+  );
+
+  return upcomingAppointments;
 };
 
 // Returns true if coach slot is not booked by other students, else false

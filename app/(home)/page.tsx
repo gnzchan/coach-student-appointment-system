@@ -1,5 +1,7 @@
 import { getActiveUser } from "@/lib/firebase-functions";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const user = await getActiveUser();
 
