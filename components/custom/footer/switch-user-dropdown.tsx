@@ -66,8 +66,11 @@ const SwitchUserDropdown = ({
   activeUser: User;
   allUsers: User[];
 }) => {
-  const { user, users, setUser, setUsers } = useUser();
   const router = useRouter();
+
+  const { user, users, setUser, setUsers } = useUser();
+  const namePrefix = user?.type === "coach" ? "Coach" : "Student";
+  const name = `${namePrefix} ${user?.name}`;
 
   // This can be changed to state variables, but assuming we won't add/remove current users, this should be fine
   const coaches: User[] = users.filter((u) => u.type === "coach");
@@ -91,7 +94,7 @@ const SwitchUserDropdown = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Switch User | {user?.name}</Button>
+        <Button variant="outline">Switch User | {name}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuRadioGroup
