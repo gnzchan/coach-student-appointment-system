@@ -39,6 +39,16 @@ const GuideAccordion = () => {
             interactions with your coach. Reflect on your journey together.
           </AccordionContent>
         </AccordionItem>
+        <AccordionItem value="switch">
+          <AccordionTrigger>Switch User</AccordionTrigger>
+          <AccordionContent>
+            The User Switching feature allows you to seamlessly transition
+            between coach and student profiles. Locate the user selector
+            dropdown in the footer to toggle between user types. Enhance your
+            experience by easily exploring the functionalities specific to each
+            user role.
+          </AccordionContent>
+        </AccordionItem>
       </Accordion>
     </div>
   );
