@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { GiWhistle } from "react-icons/gi";
+import { PiStudent } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
@@ -73,25 +75,43 @@ const UpcomingAppointments = ({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Coach</TableHead>
-          <TableHead>Student</TableHead>
-          <TableHead>Schedule</TableHead>
+          <TableHead className="text-center">
+            <span className="flex items-center justify-center">
+              {user?.type === "coach" ? (
+                <>
+                  <PiStudent size={14} className="mx-2" />
+                  Student
+                </>
+              ) : (
+                <>
+                  <GiWhistle size={14} className="mx-2" />
+                  Coach
+                </>
+              )}
+            </span>
+          </TableHead>
+          <TableHead className="text-center">Schedule</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {appointments.map((slot) => (
           <TableRow key={slot.id}>
-            <TableCell className="font-medium">
-              {`${getUserName(slot.coachId)} - ${getUserPhoneNumber(
-                slot.coachId
-              )}`}
+            <TableCell className="font-medium text-center min-w-[170px]">
+              {user?.type === "coach" ? (
+                <>
+                  <span>{`${getUserName(slot.studentId)}`}</span>
+                  <br />
+                  <span> {`${getUserPhoneNumber(slot.studentId)}`}</span>
+                </>
+              ) : (
+                <>
+                  <span>{`${getUserName(slot.coachId)}`}</span>
+                  <br />
+                  <span> {`${getUserPhoneNumber(slot.coachId)}`}</span>
+                </>
+              )}
             </TableCell>
-            <TableCell className="font-medium">
-              {`${getUserName(slot.studentId)} - ${getUserPhoneNumber(
-                slot.studentId
-              )}`}
-            </TableCell>
-            <TableCell>
+            <TableCell className="text-center min-w-[170px]">
               <span>{`${format(slot.startDateTime, "MMM d, yyyy, ha")}`}</span>
               <br />
               <span>{`${format(slot.endDateTime, "MMM d, yyyy, ha")}`}</span>

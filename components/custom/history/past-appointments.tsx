@@ -107,22 +107,25 @@ const PastAppointments = ({
       <TableHeader>
         <TableRow>
           <TableHead>
-            <span className="flex items-center">
-              <GiWhistle size={14} className="mx-2" />
-              Coach
+            <span className="flex items-center justify-center">
+              {user?.type === "coach" ? (
+                <>
+                  <PiStudent size={14} className="mx-2" />
+                  Student
+                </>
+              ) : (
+                <>
+                  <GiWhistle size={14} className="mx-2" />
+                  Coach
+                </>
+              )}
             </span>
           </TableHead>
-          <TableHead>
-            <span className="flex items-center">
-              <PiStudent size={14} className="mx-2" />
-              Student
-            </span>
-          </TableHead>
-          <TableHead>Schedule</TableHead>
+          <TableHead className="text-center">Schedule</TableHead>
           {user?.type === "coach" && (
             <>
-              <TableHead>Score</TableHead>
-              <TableHead>Notes</TableHead>
+              <TableHead className="text-center">Score</TableHead>
+              <TableHead className="text-center">Notes</TableHead>
             </>
           )}
         </TableRow>
@@ -130,25 +133,30 @@ const PastAppointments = ({
       <TableBody>
         {appointments.map((slot) => (
           <TableRow key={slot.id}>
-            <TableCell className="font-medium">
-              {`${getUserName(slot.coachId)} - ${getUserPhoneNumber(
-                slot.coachId
-              )}`}
+            <TableCell className="font-medium text-center min-w-[170px]">
+              {user?.type === "coach" ? (
+                <>
+                  <span>{`${getUserName(slot.studentId)}`}</span>
+                  <br />
+                  <span> {`${getUserPhoneNumber(slot.studentId)}`}</span>
+                </>
+              ) : (
+                <>
+                  <span>{`${getUserName(slot.coachId)}`}</span>
+                  <br />
+                  <span> {`${getUserPhoneNumber(slot.coachId)}`}</span>
+                </>
+              )}
             </TableCell>
-            <TableCell className="font-medium">
-              {`${getUserName(slot.studentId)} - ${getUserPhoneNumber(
-                slot.studentId
-              )}`}
-            </TableCell>
-            <TableCell>
+            <TableCell className="text-center min-w-[170px]">
               <span>{`${format(slot.startDateTime, "MMM d, yyyy, ha")}`}</span>
               <br />
               <span>{`${format(slot.endDateTime, "MMM d, yyyy, ha")}`}</span>
             </TableCell>
             {user?.type === "coach" && (
               <>
-                <TableCell>{slot.score}</TableCell>
-                <TableCell className="truncate w-[200px] text-wrap">
+                <TableCell className="text-center">{slot.score}</TableCell>
+                <TableCell className="truncate w-full text-wrap">
                   {slot.notes}
                 </TableCell>
                 <TableCell className="text-right">
