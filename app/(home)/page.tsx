@@ -1,3 +1,4 @@
+import { GuideAccordion } from "@/components/custom/home/guide-accordion";
 import { getActiveUser } from "@/lib/firebase-functions";
 
 export const revalidate = 0;
@@ -19,11 +20,18 @@ export default async function Home() {
   ];
 
   return (
-    <div className="py-44 lg:text-center">
-      <h1 className="text-5xl font-light mb-6">
-        welcome <span className="font-extrabold">{user.name}</span>
-      </h1>
-      <p>{messageContent.find((msg) => msg.userType === user.type)?.message}</p>
+    <div className="flex flex-col">
+      <div className="py-44 lg:text-center">
+        <h1 className="text-5xl md:text-8xl font-light mb-6">
+          welcome <span className="font-extrabold">{user.name}</span>
+        </h1>
+        <p>
+          {messageContent.find((msg) => msg.userType === user.type)?.message}
+        </p>
+      </div>
+      <div>
+        <GuideAccordion />
+      </div>
     </div>
   );
 }
