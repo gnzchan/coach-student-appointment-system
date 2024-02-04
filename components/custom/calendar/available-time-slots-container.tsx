@@ -8,6 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useUser } from "@/hooks/useUser";
+import {
+  isCoachSlotAvailable,
+  updateCoachSlot,
+} from "@/lib/firebase-functions";
 
 const AvailableTimeSlotsContainer = ({
   date,
@@ -19,6 +24,7 @@ const AvailableTimeSlotsContainer = ({
   };
   availableCoachSlots: Slot[];
 }) => {
+  const { user } = useUser();
   const [availableSlotsForDay, setAvailableSlotsForDay] = useState<Slot[]>([]);
 
   useEffect(() => {
@@ -35,6 +41,19 @@ const AvailableTimeSlotsContainer = ({
       );
     setAvailableSlotsForDay(slots);
   }, [date, availableCoachSlots]);
+
+  const bookSlot = async (slot: Slot) => {
+    if (!user) return;
+
+    // Checks if other users have booked the slot already. Guard clause to check if slot still available
+    const stillAvailable = await isCoachSlotAvailable(slot.id);
+
+    if (stillAvailable) {
+      setAvailableSlotsForDay((prev) => prev.filter((s) => s.id !== slot.id));
+      const data = { ...slot, studentId: user.id };
+      await updateCoachSlot(data);
+    }
+  };
 
   if (availableSlotsForDay.length === 0) {
     return <span className="text-center">No available slots</span>;
@@ -59,7 +78,7 @@ const AvailableTimeSlotsContainer = ({
               <TableCell className="text-right">
                 <button
                   onClick={() => {
-                    // book slot
+                    bookSlot(slot);
                   }}
                   className="border-2 px-6 py-2 rounded-sm hover:bg-green-500 hover:text-white"
                 >

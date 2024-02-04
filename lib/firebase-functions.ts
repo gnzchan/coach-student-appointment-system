@@ -2,6 +2,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -100,4 +101,21 @@ export const getAvailableCoachSlots = async () => {
   querySnapshot.docs.forEach((doc) => slots.push(doc.data() as Slot));
 
   return slots;
+};
+
+// Returns true if coach slot is not booked by other students, else false
+export const isCoachSlotAvailable = async (slotId: string) => {
+  const querySnapshot = await getDoc(doc(database, "slots", slotId));
+
+  if (querySnapshot.exists()) {
+    const slot = querySnapshot.data() as unknown as Slot;
+    if (slot.studentId === "") {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const updateCoachSlot = async (slot: Slot) => {
+  await setDoc(doc(database, "slots", slot.id), slot);
 };

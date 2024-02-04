@@ -25,7 +25,6 @@ const CoachAvailabilityForm = ({ coachSlots }: { coachSlots: Slot[] }) => {
     useCoachTimeSlots(user);
 
   useEffect(() => {
-    console.log(coachSlots);
     const initialCoachTimeSlots = coachSlots.map((slot) => ({
       startDateTime: new Date(slot.startDateTime),
       endDateTime: new Date(slot.endDateTime),
